@@ -6,7 +6,7 @@ int numUniqueEmails(char ** emails, int emailsSize){
     for (int i = 0; i < emailsSize; i++){
         printf("blah #%d\n", i);
         printf("%s\n", emails[i]);
-        printf("size = %d", sizeof(emails[i])/sizeof(emails[0]));
+        printf("size = %d", sizeof(emails[i]) );   //sizeof(emails[i])/sizeof(emails[0]));
         // for(int j = 0; j < sizeof(emails[i])/sizeof(char*); j++) {
         //     printf("%c", *emails+j);
         // }
