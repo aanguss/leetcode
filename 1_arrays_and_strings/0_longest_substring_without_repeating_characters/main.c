@@ -13,12 +13,14 @@ int lengthOfLongestSubstring(char * s){
     char * pLongestString = longestString;
     int lols_index = 0;
     int foundRepeat;
-    int startIndex;
-    int endIndex;
+    int startIndex = NULL;
+    int endIndex = NULL;
     int i,j;
     int longestIndex = 0;
     printf("found string: %s of length: %d and ls = %d\n", 
             s, lenOfS, strlen(longestString));
+
+    printf("---start index---\n");
     for (i = 0; i <= lenOfS; i++) {
         foundRepeat = 0;
         for (j = i+1; j <= lenOfS; j++) {
@@ -35,11 +37,17 @@ int lengthOfLongestSubstring(char * s){
         }
     }
 
+    printf("found, startIndex: %d, endIndex: %d\n", 
+            startIndex, endIndex);
+
+    printf("---end index---\n");
     for (i = startIndex+1; i <= lenOfS; i++) {
         foundRepeat = 0;
         for (j = startIndex; j <= lenOfS; j++) {
             if (s[i] == s[j])
             {
+                printf("found repeat, i=%d=%c, j=%d=%c\n",
+                    i, s[i], j, s[j]);
                 foundRepeat = 1;
                 break;
             }
@@ -49,11 +57,14 @@ int lengthOfLongestSubstring(char * s){
         }
     }
 
-    printf("found, startIndex: %d, endIndex: %d", 
+    printf("found, startIndex: %d, endIndex: %d\n", 
             startIndex, endIndex);
     
+    // for (j = startIndex; j <= endIndex; j++) {
+    //     longestString[lols_index++] = s[j];
+    // }
     for (j = startIndex; j <= endIndex; j++) {
-        longestString[lols_index++] = s[j];
+        strncat(longestString, &s[j], 1);
     }
     
     // printf("longestString = %s\n", (char*)(&pLongestString[0]));
