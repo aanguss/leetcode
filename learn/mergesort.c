@@ -7,14 +7,12 @@
  * @param right - right index edge to stop printing
  * @return none
  */
-// void printArray(int * arr, int left, int right) {
 void printArray(int arr[], int left, int right) {
     int arrSize = right - left;
     printf(".\n");
     for (int i = 0; i <= arrSize; i++) {
         printf("debug - arr[%d] = %d\n", i, arr[i]);
     }
-    // printf("\n");
 }
 
 /**
@@ -36,7 +34,6 @@ void swap(int * x, int * y) {
  * @param middle - middle index of array to sort
  * @param right - right index of array to sort
  */
-// void merge(int * arr, int left, int middle, int right) {
 void merge(int arr[], int left, int middle, int right) {
     int leftSize = middle - left;
     int rightSize = right - middle;
@@ -44,29 +41,17 @@ void merge(int arr[], int left, int middle, int right) {
     int sortedArray[totalSize];
     int i = left, j = middle, k = 0;
 
-    // for(int i = 0; i < totalSize; i++) {
-    // while (i < leftSize && i < rightSize) {
-    //     if (arr[leftSize + i] > )
-    //     i++;
-    // }
-
-    // for (i; i < leftSize; i++) {
-    //     for (j; j < rightSize; j++) {
-    //         if (arr[j] < arr[])
-    //     }
-    // }
-
-    printf("--debug start of merge from %d to %d--\n", left, right);
+    // printf("--debug start of merge from %d to %d--\n", left, right);
     printArray(arr, left, right);
 
     while (i < middle && j <= right) {
         if (arr[i] <= arr[j]) {
             sortedArray[k] = arr[i];
-            printf("arr_i[%d]=%d < arr_j[%d]=%d, k[%d]=%d\n", i, arr[i], j, arr[j], k, sortedArray[k]);
+            // printf("arr_i[%d]=%d < arr_j[%d]=%d, k[%d]=%d\n", i, arr[i], j, arr[j], k, sortedArray[k]);
             i++;
         } else if (arr[i] > arr[j]) {
             sortedArray[k] = arr[j];
-            printf("arr_i[%d]=%d > arr_j[%d]=%d, k[%d]=%d\n", i, arr[i], j, arr[j], k, sortedArray[k]);
+            // printf("arr_i[%d]=%d > arr_j[%d]=%d, k[%d]=%d\n", i, arr[i], j, arr[j], k, sortedArray[k]);
             j++;
         } else {
             printf("ERROR found...");
@@ -75,18 +60,18 @@ void merge(int arr[], int left, int middle, int right) {
         k++;
     }
 
-    printf("done in while, i=%d, j=%d\n", i, j);
+    // printf("done in while, i=%d, j=%d\n", i, j);
 
     while (i < middle) {
         sortedArray[k] = arr[i];
-        printf("arr_i[%d]=%d, k[%d]=%d\n", i, arr[i], k, sortedArray[k]);
+        // printf("arr_i[%d]=%d, k[%d]=%d\n", i, arr[i], k, sortedArray[k]);
         i++;
         k++;
     }
 
     while (j <= right) {
         sortedArray[k] = arr[j];
-        printf("arr_j[%d]=%d, k[%d]=%d\n", j, arr[j], k, sortedArray[k]);
+        // printf("arr_j[%d]=%d, k[%d]=%d\n", j, arr[j], k, sortedArray[k]);
         j++;
         k++;
     }
@@ -94,7 +79,7 @@ void merge(int arr[], int left, int middle, int right) {
     i = left;
     for (k = 0; k <= totalSize; k++) {
         arr[i] = sortedArray[k];
-        printf("deubg-after-party - arr[%d] = %d\n", k, arr[k]);
+        // printf("deubg-after-party - arr[%d] = %d\n", k, arr[k]);
         i++;
     }
 }
@@ -170,7 +155,7 @@ void mergeSort(int arr[], int left, int right) {
         mergeSort(arr, middle + 1, right);
         // merge final arrays
         // merge(&arr);
-        printf("middle = %d\n", middle);
+        // printf("middle = %d\n", middle);
         merge2(arr, left, middle, right);
     }
 }
