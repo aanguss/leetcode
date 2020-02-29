@@ -62,11 +62,19 @@ void quickSort(int * arr, int low, int high) {
 }
 
 int main(void) {
-    int arr[7] = {38, 27, 43, 3, 9, 82, 10};
+    // int arr[7] = {38, 27, 43, 3, 9, 82, 10};
+    // int arrSize = sizeof(arr)/sizeof(arr[0]);
+
+    int arr[0x8000];
+
+    for (int i = 0; i < 0x8000; i++) {
+        arr[i] = rand();
+    }
+
     int arrSize = sizeof(arr)/sizeof(arr[0]);
 
     quickSort(arr, 0, arrSize-1);
 
-    printf("--final array--\n");
-    printArray(arr, arrSize);
+    // printf("--final array--\n");
+    // printArray(arr, arrSize);
 }

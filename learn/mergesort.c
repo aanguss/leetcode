@@ -160,19 +160,28 @@ void mergeSort(int arr[], int left, int right) {
     }
 }
 
+// #define RAND_MAX = 1000;
+
 int main(void) {
-    // int * pArr;
     // int arr[4] = {4, 3, 1, 0};
-    int arr[7] = {38, 27, 43, 3, 9, 82, 10};
-    // pArr = arr;
     // int arrSize = sizeof(arr)/sizeof(int);
+
+    // int arr[7] = {38, 27, 43, 3, 9, 82, 10};
+    // int arrSize = sizeof(arr)/sizeof(arr[0]);
+
+    int arr[0x8000];
+
+    for (int i = 0; i < 0x8000; i++) {
+        arr[i] = rand();
+    }
+
     int arrSize = sizeof(arr)/sizeof(arr[0]);
 
     // mergeSort(&arr[0], 0, arrSize-1);
     mergeSort(arr, 0, arrSize-1);
 
-    printf("--final array--\n");
-    for (int i = 0; i < arrSize; i++) {
-        printf("arr[%d] = %d\n", i, arr[i]);
-    }
+    // printf("--final array--\n");
+    // for (int i = 0; i < arrSize; i++) {
+    //     printf("arr[%d] = %d\n", i, arr[i]);
+    // }
 }
