@@ -43,14 +43,16 @@ int maxNodeSum(struct TreeNode * root) {
         return 0;
     }
 
+    int rootVal = root->val;
     int leftVal = maxNodeSum(root->left);
     int rightVal = maxNodeSum(root->right);
+    int rootMax = rootVal + leftVal + rightVal;
 
-    if (leftVal + rightVal + root->val > maxValue) {
-        maxValue = leftVal + rightVal + root->val;
+    if (rootMax > maxValue) {
+        maxValue = rootMax;
     }
 
-    return (leftVal + rightVal + root->val);
+    return rootMax;
 }
 
 int maxPathSum(struct TreeNode * root) {
