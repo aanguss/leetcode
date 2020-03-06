@@ -23,8 +23,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
 double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size){
+    double median1 = 0, median2 = 0;
+    for(int i = 0; i < nums1Size; i++) {
+        median1 += nums1[i];
+    }
+    for(int i = 0; i < nums1Size; i++) {
+        median2 += nums2[i];
+    }
+    median1 = median1 / nums1Size;
+    median2 = median2 / nums2Size;
+    return (median1 + median2) / 2;
+}
 
+int main(void) {
+    int nums1[2] = {1, 2};
+    int nums2[2] = {3, 4};
+    double median;
+    
+    median = findMedianSortedArrays(nums1, sizeof(nums1)/sizeof(nums1[0]),
+            nums2, sizeof(nums2)/sizeof(nums2[0]));
+    printf("media = %f\n", median);
 }
