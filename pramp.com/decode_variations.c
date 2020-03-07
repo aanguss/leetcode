@@ -65,9 +65,3 @@ int main()
 {
 	return 0;
 }
-
-still there?
-  i lost your 
-  i toovideo
-  
-  i wonder if they kick us off after a 

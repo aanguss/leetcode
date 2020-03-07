@@ -44,8 +44,8 @@ int getIndexNFromEnd(node_t * head, int indexN) {
 }
 
 int main(void) {
-    node_t * head;
-    getIndexNFromEnd(head);
+    node_t * head = malloc(sizeof(node_t));
+    getIndexNFromEnd(head, 9);
 
     return 0;
 }
