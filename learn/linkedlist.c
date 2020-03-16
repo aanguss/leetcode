@@ -3,8 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 
+/**
+ * @brief simple linked list
+ * @param none so dont list it
+ * @return none so dont list it
+ */
 typedef struct node {
     int val;
+    char * name;
     struct node * next;
 } node_t;
 
