@@ -17,14 +17,37 @@
  */
 
 #include <iostream> 
-#include <vector> 
+#include <vector>
+#include <map>
+#include <algorithm>
 
 using namespace std; 
 
 class Solution {
+    map< vector<int>, int > visited;
 public:
     // in C this looks like: int singleNumber(int* nums, int numsSize){ ... }
-    int singleNumber(vector<int>& nums) {
+    int singleNumber(std::vector<int>& nums) {
+        // map<vector<int>, int> vis;
         
+
+        for_each(nums.begin(), nums.end(), doubleCheck);
+        
+        // create array size of nums
+        // go the numbers and save them in another vector
+        // if the number already exists add them to vector
+        // 
+    }
+private:
+    void doubleCheck() {
+
     }
 };
+
+int main() {
+    Solution solution;
+    std::vector <int> myVector = {10, 1, 10, 2, 2};
+
+    solution.singleNumber(myVector);
+    return 0;
+}
