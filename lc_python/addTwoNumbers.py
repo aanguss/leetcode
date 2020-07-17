@@ -46,6 +46,7 @@ class Solution:
             sumList.append(sum)
             print(f"{sum} -> ", end='')
             aList = aList.next
+            
         while (bList):
             sum = bList.val + remainder
             remainder = 0
