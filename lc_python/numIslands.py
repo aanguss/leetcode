@@ -27,6 +27,8 @@ from typing import List
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid:
+            return 0 # no islands since grid is empty
         islandLists = [[]]
         islandGraph = {}
         islandsIndex = 0
@@ -235,6 +237,8 @@ grid2 = [
   ["0","0","0","1","1"]
 ] # should return 3
 
+grid3 = [["1","0","1","1","1"],["1","0","1","0","1"],["1","1","1","0","1"]] # should return 1
+
 s = Solution()
 
 islands = s.numIslands(grid1)
@@ -242,3 +246,6 @@ print(f"Number of islands on grid1 = {islands}")
 
 islands = s.numIslands(grid2)
 print(f"Number of islands on grid2 = {islands}")
+
+islands = s.numIslands(grid3)
+print(f"Number of islands on grid3 = {islands}")
