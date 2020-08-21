@@ -25,10 +25,11 @@ class Solution:
         wordDict = {}
         highestValue = 0
         highestKey = ''
-        splitParagraph = paragraph.lower().replace(",", ", ").replace(".","").replace("!","").replace("?","").replace("'","").replace(";","").split()
+        splitParagraph = paragraph.lower().replace(",", " ").replace(".","").replace("!","").replace("?","").replace("'","").replace(";","")
+        splitParagraph = splitParagraph.split()
         
         for word in splitParagraph:
-            print(word)
+            # print(word)
             if word in wordDict.keys() :
                 wordDict[word] += 1
             else:
@@ -46,6 +47,7 @@ class Solution:
                 highestValue = wordDict[key]
                 highestKey = key
 
+        # print(highestKey)
         return highestKey
         # for word in paragraph:
 
