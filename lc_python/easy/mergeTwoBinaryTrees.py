@@ -89,8 +89,13 @@ class Solution:
 
         return newTree
 
-
-
+    def mergeTreesTiny(self, t1: TreeNode, t2: TreeNode):
+        if None in (t1, t2):
+            return t1 or t2
+        t1.val += t2.val
+        t1.left = self.mergeTreesTiny(t1.left, t2.left)
+        t1.right = self.mergeTreesTiny(t1.right, t2.right)
+        return t1
 
 s = Solution()
 
@@ -121,3 +126,9 @@ s._printTreeDepth(newTree)
 print("newTree-bfs")
 s._printTreeBreadth(newTree)
 
+newTreeTiny = TreeNode()
+newTreeTiny = s.mergeTreesTiny(tree1, tree2)
+print("newTreeTiny-dfs")
+s._printTreeDepth(newTreeTiny)
+print("newTreeTiny-bfs")
+s._printTreeBreadth(newTreeTiny)
