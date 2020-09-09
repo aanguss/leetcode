@@ -44,7 +44,7 @@ class Solution:
                     s = queue.pop(0)
                     s_row = s[0]
                     s_col = s[1]
-                    print(s, end='')
+                    # print(s, end='')
 
                     if (s_row - 1 >= 0):
                         if (grid[s_row - 1][s_col] == '1'):

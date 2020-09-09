@@ -19,7 +19,7 @@
 # and that "hit" isn't the answer even though it occurs more because it is banned.
 
 from typing import List
-
+debugPrint = False
 class Solution:
     def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
         wordDict = {}
@@ -29,29 +29,26 @@ class Solution:
         splitParagraph = splitParagraph.split()
         
         for word in splitParagraph:
-            # print(word)
+            if debugPrint: print(word)
             if word in wordDict.keys() :
                 wordDict[word] += 1
             else:
                 wordDict.update({word.lower(): 1})
 
-        # print(wordDict)
+        if debugPrint: print(wordDict)
 
         for ban in banned:
             if ban in wordDict.keys() :
                 del wordDict[ban]
 
-        # print(wordDict)
+        if debugPrint: print(wordDict)
         for key in wordDict:
             if wordDict[key] > highestValue:
                 highestValue = wordDict[key]
                 highestKey = key
 
-        # print(highestKey)
+        if debugPrint: print(highestKey)
         return highestKey
-        # for word in paragraph:
-
-        #     wordDict.update(word.lower(), )
 
 s = Solution()
 paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
