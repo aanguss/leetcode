@@ -45,20 +45,28 @@ class Solution:
         if not reviews: return []
 
         keywordDictionary = {}
-        # maxValues = []
         # set all keywords and reviews to lowercase
         keywords = [x.lower() for x in keywords]
         reviews = [x.lower() for x in reviews]
         for review in reviews:
-            for keyword in keywords:
-                if keyword in review:
-                    if keyword in keywordDictionary:
-                        keywordDictionary[keyword] += 1
-                    else:
-                        keywordDictionary.update({keyword : 1})
+            for r in review.split():
+                # print(r)
+                for keyword in keywords:
+                    if keyword in r:
+                        if keyword in keywordDictionary:
+                            keywordDictionary[keyword] += 1
+                        else:
+                            keywordDictionary.update({keyword : 1})
 
-        sorted_keywords = sorted(keywordDictionary.items())
+        # https://careerkarma.com/blog/python-sort-a-dictionary-by-value/
+        sorted_keywords = sorted(keywordDictionary.items(), key=lambda x: x[1], reverse=True)
         print(sorted_keywords)
+
+        maxKeywords = []
+        for i in range(k):
+            maxKeywords.append(sorted_keywords[i][0])
+
+        
 
         # values = list(keywordDictionary.values())
         # keys = list(keywordDictionary.keys()) 
@@ -66,7 +74,7 @@ class Solution:
         # make a list of max values
         # maxList = [i for i, j in enumerate(keywordDictionary) if j == maxValue]
         # return keys[values.index(max(values))]
-        return sorted_keywords
+        return maxKeywords
 
 
 s = Solution()
@@ -81,7 +89,7 @@ reviews = [
 ]
 solution = ["anacell", "betacellular"]
 output = s.getFrequentKeywords(k, keywords, reviews)
-print("%s : output = %s" % (output == solution, output))
+print("%s : output = %s\n" % (output == solution, output))
 
 # Test Case #0.2
 k = 2
@@ -93,7 +101,7 @@ reviews = [
 ]
 solution = ["anacell", "betacellular"]
 output = s.getFrequentKeywords(k, keywords, reviews)
-print("%s : output = %s" % (output == solution, output))
+print("%s : output = %s\n" % (output == solution, output))
 
 # Test Case #0.3
 k = 2
@@ -101,8 +109,7 @@ keywords = ["anacell", "cetracular", "betacellular"]
 reviews = []
 solution = ["anacell", "betacellular"]
 output = s.getFrequentKeywords(k, keywords, reviews)
-print("%s : output = %s" % (output == solution, output))
-
+print("%s : output = %s\n" % (output == solution, output))
 
 # Test Case #1
 k = 2
@@ -114,4 +121,18 @@ reviews = [
 ]
 solution = ["anacell", "betacellular"]
 output = s.getFrequentKeywords(k, keywords, reviews)
-print("%s : output = %s" % (output == solution, output))
+print("%s : output = %s\n" % (output == solution, output))
+
+# Test Case #2
+k = 2
+keywords = ["anacell", "betacellular", "cetracular", "deltacellular", "eurocell"]
+reviews = [
+  "I love anacell Best services; Best services",
+  "betacellular has great services",
+  "deltacellular provides much better services than betacellular",
+  "cetracular is worse than anacell",
+  "Betacellular is better than deltacellular.",
+]
+solution = ["betacellular", "anacell"]
+output = s.getFrequentKeywords(k, keywords, reviews)
+print("%s : output = %s\n" % (output == solution, output))
