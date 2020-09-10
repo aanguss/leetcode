@@ -45,8 +45,21 @@
 from typing import List
 class Solution:
     def getSearchSuggestion(self, products: List[str], searchWord:str) -> List[List[str]]:
-        return [["one", "two", "three"]]
+        searchListPerChar = []
+        for i in range(1, len(searchWord) + 1):
+            # print(searchWord[:i])
+            subList = []
+            for item in products:
+                if item[:i] == searchWord[:i]:
+                    subList.append(item)
+            # print(subList)
+            subList.sort()
+            print(subList[:3])
+            searchListPerChar.append(subList[:3])
+
+        return searchListPerChar
         
+
 s = Solution()
 products = ["mobile", "mouse", "moneypot", "monitor", "mousepad"]
 searchWord = "mouse"
