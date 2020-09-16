@@ -38,6 +38,9 @@ class TreeNode:
             self.value = value
 
     def deleteNode(self, value):
+
+        # https: // leetcode.com/problems/delete-node-in-a-bst/discuss/93300/python-delete-node-in-bst
+        # https: // algorithmtutor.com/Data-Structures/Tree/Binary-Search-Trees/
         # if self.value == value:
         #     if self.right and self.left:
         #         # get the successor node and its parent
