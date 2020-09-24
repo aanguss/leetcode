@@ -50,54 +50,86 @@ class Solution:
         debug = False
         totalStations = len(gas)
         currentStation = 0
-        startingStation = 0
-        # stationFound = False
-        while True:
-            # gasTank = gas[(startingStation - 1) % totalStations]
-            gasTank = gas[startingStation]
-            completedCircuit = True
+        stationAnswer = -1
+        
+        for startingStation in range(totalStations):
             if debug: print("-----starting station =", startingStation)
-
-            # for i in range(startingStation + 1, startingStation + totalStations + 1, 1):
-            currentStation = startingStation
-            visitedStations = 0
             if gas[startingStation] < cost[startingStation]:
-                validStationTest = False
-                # completedCircuit = False
-            else:
-                validStationTest = True
-            while validStationTest:
-                # if debug: print("i =", i)
-                # currentStation = i % totalStations
+                continue
+            gasTank = 0
+            completedCircuit = True
+            for i in range(startingStation, startingStation + totalStations + 1, 1):
+                currentStation = i % totalStations
+                gasTank += gas[currentStation]
                 gasCost = cost[currentStation]
+                gasTank -= gasCost
 
                 if debug: print("currentStation =", currentStation)
-                if debug: print("gasCost =", gasCost)
                 if debug: print("gasTank =", gasTank)
+                if debug: print("gasCost =", gasCost)
 
-                # can't be this iteration because ran out of gas
-                if ((gasTank - gasCost) < 0):
+                if gasTank < 0:
                     if debug: print("ran out of gas :(")
                     completedCircuit = False
                     break
-                # else:
-                gasTank -= gasCost
-                currentStation = (currentStation + 1) % totalStations
-                gasTank += gas[currentStation]
-                visitedStations += 1
-                if visitedStations > totalStations:
-                    # stationFound = True
-                    break
-            if completedCircuit and validStationTest:
-                break
-            else:
-                startingStation += 1
-
-            if startingStation >= totalStations:
-                startingStation = -1
+            if completedCircuit:
+                stationAnswer = startingStation
                 break
 
-        return startingStation
+        return stationAnswer
+# SUPER SLOW SOLUTION :(
+        # debug = False
+        # totalStations = len(gas)
+        # currentStation = 0
+        # startingStation = 0
+        # # stationFound = False
+        # while True:
+        #     # gasTank = gas[(startingStation - 1) % totalStations]
+        #     gasTank = gas[startingStation]
+        #     completedCircuit = True
+        #     if debug: print("-----starting station =", startingStation)
+
+        #     # for i in range(startingStation + 1, startingStation + totalStations + 1, 1):
+        #     currentStation = startingStation
+        #     visitedStations = 0
+        #     if gas[startingStation] < cost[startingStation]:
+        #         validStationTest = False
+        #         # completedCircuit = False
+        #     else:
+        #         validStationTest = True
+        #     # while validStationTest:
+        #     for i in range(startingStation, startingStation + totalStations + 1, 1):
+        #         # if debug: print("i =", i)
+        #         currentStation = i % totalStations
+        #         gasCost = cost[currentStation]
+
+        #         if debug: print("currentStation =", currentStation)
+        #         if debug: print("gasCost =", gasCost)
+        #         if debug: print("gasTank =", gasTank)
+
+        #         # can't be this iteration because ran out of gas
+        #         if ((gasTank - gasCost) < 0):
+        #             if debug: print("ran out of gas :(")
+        #             completedCircuit = False
+        #             break
+        #         # else:
+        #         gasTank -= gasCost
+        #         currentStation = (currentStation + 1) % totalStations
+        #         gasTank += gas[currentStation]
+        #         visitedStations += 1
+        #         if visitedStations > totalStations:
+        #             # stationFound = True
+        #             break
+        #     if completedCircuit and validStationTest:
+        #         break
+        #     else:
+        #         startingStation += 1
+
+        #     if startingStation >= totalStations:
+        #         startingStation = -1
+        #         break
+
+        # return startingStation
 
 s = Solution()
 gas  = [1,2,3,4,5]
