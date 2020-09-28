@@ -49,58 +49,34 @@
 #     equations[i][0], equations[i][1], queries[i][0], queries[i][1] 
 #         consist of lower case English letters and digits.
 from typing import List
+import collections
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        debug = False
-        solutionList = []
-        variables = {}
-        if debug: print(equations)
-        for i in range(len(equations)):
-            if debug: print(equations[i])
-            if equations[i][0] + '/' + equations[i][1] not in variables:
-                variables[equations[i][0] + '/' + equations[i][1]] = values[i]
-            if equations[i][1] + '/' + equations[i][0] not in variables:
-                variables[equations[i][1] + '/' + equations[i][0]] = 1/values[i]
-        
-        nothingAdded = False
-        while nothingAdded == False:
-            extraVariables = {}
-            nothingAdded = True
-            for key, variable in variables.items():
-                if debug: print("%s: %s" % (key, variable))
-                divIndex1 = key.find('/')
-                numerator1 = key[divIndex1 + 1:]
-                denominator1 = key[:divIndex1]
-
-                for k, v in variables.items():
-                    divIndex2 = k.find('/')
-                    numerator2 = k[divIndex2 + 1:]
-                    denominator2 = k[:divIndex2]
-                    if numerator2 == denominator1:
-                        if numerator1 + '/' + denominator2 not in extraVariables:
-                            extraVariables[numerator1 + '/' + denominator2] = 1 / (variable * v)
-                        if denominator2 + '/' + numerator1 not in extraVariables:
-                            extraVariables[denominator2 + '/' + numerator1] = (variable * v)
-                    if numerator1 == denominator2:
-                        if numerator2 + '/' + denominator1 not in extraVariables:
-                            extraVariables[numerator2 + '/' + denominator1] = 1 / (variable * v)
-                        if denominator1 + '/' + numerator2 not in extraVariables:
-                            extraVariables[denominator1 + '/' + numerator2] = (variable * v)
-            if debug: print("variables =", variables)
-            if debug: print("extras =", extraVariables)
-            for key in extraVariables:
-                if key not in variables:
-                    nothingAdded = False
-                    variables[key] = extraVariables[key]
-
-        for query in queries:
-            queryKey = query[0] + '/' + query[1]
-            if queryKey not in variables:
-                solutionList.append(-1)
+        graph = collections.defaultdict(list)
+        weight = collections.defaultdict(list)
+        for idx in range(len(equations)):
+            v1 = equations[idx][0]
+            v2 = equations[idx][1]
+            graph[v1].append(v2)
+            weight[v1].append(values[idx])
+            graph[v2].append(v1)
+            weight[v2].append(1/values[idx])
+        def dfs(p, q):
+            if p == q: return 1
+            for idx, c in enumerate(graph[p]):
+                if c not in self.visited:
+                    self.visited.append(c)
+                    mid_result = dfs(c, q)
+                    if mid_result >= 0: return weight[p][idx]*mid_result
+            return -1
+        results = []
+        for v1, v2 in queries:
+            if v1 in graph.keys() and v2 in graph.keys():
+                self.visited = []
+                results.append(max(dfs(v1, v2), -1))
             else:
-                solutionList.append(variables[queryKey])
-        if debug: print('final variables =', variables)
-        return solutionList
+                results.append(-1)
+        return results
 
 s = Solution()
 equations = [["a","b"],["b","c"]]

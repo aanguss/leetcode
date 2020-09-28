@@ -49,58 +49,39 @@
 #     equations[i][0], equations[i][1], queries[i][0], queries[i][1] 
 #         consist of lower case English letters and digits.
 from typing import List
+from collections import defaultdict
+import functools
+from functools import lru_cache
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        debug = False
-        solutionList = []
-        variables = {}
-        if debug: print(equations)
-        for i in range(len(equations)):
-            if debug: print(equations[i])
-            if equations[i][0] + '/' + equations[i][1] not in variables:
-                variables[equations[i][0] + '/' + equations[i][1]] = values[i]
-            if equations[i][1] + '/' + equations[i][0] not in variables:
-                variables[equations[i][1] + '/' + equations[i][0]] = 1/values[i]
-        
-        nothingAdded = False
-        while nothingAdded == False:
-            extraVariables = {}
-            nothingAdded = True
-            for key, variable in variables.items():
-                if debug: print("%s: %s" % (key, variable))
-                divIndex1 = key.find('/')
-                numerator1 = key[divIndex1 + 1:]
-                denominator1 = key[:divIndex1]
+        edges = defaultdict(dict)
+        for idx, [u, v] in enumerate(equations):
+            val = values[idx]
+            edges[u][v] = val
+            edges[v][u] = 1. / val
 
-                for k, v in variables.items():
-                    divIndex2 = k.find('/')
-                    numerator2 = k[divIndex2 + 1:]
-                    denominator2 = k[:divIndex2]
-                    if numerator2 == denominator1:
-                        if numerator1 + '/' + denominator2 not in extraVariables:
-                            extraVariables[numerator1 + '/' + denominator2] = 1 / (variable * v)
-                        if denominator2 + '/' + numerator1 not in extraVariables:
-                            extraVariables[denominator2 + '/' + numerator1] = (variable * v)
-                    if numerator1 == denominator2:
-                        if numerator2 + '/' + denominator1 not in extraVariables:
-                            extraVariables[numerator2 + '/' + denominator1] = 1 / (variable * v)
-                        if denominator1 + '/' + numerator2 not in extraVariables:
-                            extraVariables[denominator1 + '/' + numerator2] = (variable * v)
-            if debug: print("variables =", variables)
-            if debug: print("extras =", extraVariables)
-            for key in extraVariables:
-                if key not in variables:
-                    nothingAdded = False
-                    variables[key] = extraVariables[key]
+        seen = set()
 
-        for query in queries:
-            queryKey = query[0] + '/' + query[1]
-            if queryKey not in variables:
-                solutionList.append(-1)
-            else:
-                solutionList.append(variables[queryKey])
-        if debug: print('final variables =', variables)
-        return solutionList
+        # Function for DFS 
+        @lru_cache(None)
+        def helper(cur_pt, target):
+            if cur_pt in seen:
+                return -1
+            seen.add(cur_pt)
+            if cur_pt not in edges:
+                return -1
+            if cur_pt == target:
+                return 1
+            return max(edges[cur_pt][v] * helper(v, target) for v in edges[cur_pt])
+
+        ans = []
+        for [start, end] in queries:
+            seen.clear()
+            helper.cache_clear()
+            val = helper(start, end)
+            ans.append(val if val > 0 else -1)
+        return ans
+
 
 s = Solution()
 equations = [["a","b"],["b","c"]]
