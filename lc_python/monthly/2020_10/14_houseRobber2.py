@@ -43,12 +43,53 @@ class Solution:
             else:
                 return nums[1]
 
+        # this follows the given solution using DP
+        # and this fixes the below inputVal
+        #       inputVal = [1,3,1,3,100]
+        #       solution = 103
         maxStart = 0
         maxStart2 = 0
         for i in nums[:-1]:
             temp = maxStart
             maxStart = max(i + maxStart2, maxStart)
             maxStart2 = temp
+
+        # i = 1
+        #     temp = maxStart = 0
+        #     maxStart = max(i=1 + maxStart2=0, maxStart=0) = 1
+        #     maxStart2 = temp = 0
+        # i = 3
+        #     temp = maxStart = 1
+        #     maxStart = max(i=3 + maxStart2=0, maxStart = 1) = 3
+        #     maxStart2 = temp = 1
+        # i = 1
+        #     temp = maxStart = 3
+        #     maxStart = max(i=1 + maxStart2=1, maxStart=3) = 3
+        #     maxStart2 = temp = 3
+        # i = 3
+        #     temp = maxStart = 3
+        #     maxStart = max(i=3 + maxStart2=3, maxStart=3) = 6
+        #     maxStart2 = temp = 3
+
+        # OR
+
+        # i = 3
+        #     temp = maxEnd = 0
+        #     maxEnd = max(i=3 + maxEnd2=0, maxEnd = 0) = 3
+        #     maxEnd2 = temp = 0
+        # i = 1
+        #     temp = maxEnd = 3
+        #     maxEnd = max(i=1 + maxEnd2=0, maxEnd=3) = 3
+        #     maxEnd2 = temp = 3
+        # i = 3
+        #     temp = maxEnd = 3
+        #     maxEnd = max(i=3 + maxEnd2=3, maxEnd=3) = 6
+        #     maxEnd2 = temp = 3
+        # i = 100
+        #     temp = maxEnd = 6
+        #     maxEnd = max(i=100 + maxEnd2=3, maxEnd=6) = 103
+        #     maxEnd2 = temp = 6
+
         
         maxEnd = 0
         maxEnd2 = 0
