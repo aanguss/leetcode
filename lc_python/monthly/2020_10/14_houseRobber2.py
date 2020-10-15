@@ -30,9 +30,37 @@
 from typing import List
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        if nums is None:
+            return 0
+        numHouses = len(nums)
+        
+        if numHouses == 1:
+            return nums[0]
+
+        if numHouses == 2:
+            if nums[0] > nums[1]:
+                return nums[0]
+            else:
+                return nums[1]
+
+        maxStart = 0
+        maxStart2 = 0
+        for i in nums[:-1]:
+            temp = maxStart
+            maxStart = max(i + maxStart2, maxStart)
+            maxStart2 = temp
+        
+        maxEnd = 0
+        maxEnd2 = 0
+        for i in nums[1:]:
+            temp = maxEnd
+            maxEnd = max(i + maxEnd2, maxEnd)
+            maxEnd2 = temp
+
+        return max(maxStart, maxEnd)
 
         ###############################
-        # doesn't work for test case #5
+        # doesn't work for test case #5 -- redid above following dynamic programming solution
         ###############################
         # debug = False
         # if nums is None:
