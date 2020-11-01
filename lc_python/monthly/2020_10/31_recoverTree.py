@@ -28,11 +28,11 @@ class TreeNode:
     
 class Solution:
     def printTree(self, root):
-        if root.val:
+        if root.val != None:
             print(root.val)
-        if root.left: 
+        if root.left != None: 
             self.printTree(root.left)
-        if root.right:
+        if root.right != None:
             self.printTree(root.right)
 
     def recoverTree(self, root: TreeNode) -> None:
@@ -41,41 +41,45 @@ class Solution:
         """
         if root is None:
             return None
-        debug = False
+        debug = True
         allValues = []
         def getArray(n):
-            if n.left:
+            if n.left != None:
                 getArray(n.left)
-            if n.val:
+            if n.val != None:
                 allValues.append(n.val)
-            if n.right:
+            if n.right != None:
                 getArray(n.right)
         getArray(root)
         if debug: print(allValues)
 
         # find out of order indexes
-        val1 = -1
-        val2 = -1
+        val1 = None
+        val2 = None
 
-        for i in range(len(allValues)):
-            for j in range(i,len(allValues)):
-                if allValues[j] - allValues[i] == -1:
-                    if debug: print('allvalues[%d] - allValues[%d] == %d' % (j, i, allValues[j] - allValues[i]))
-                    val1 = allValues[i]
-                    val2 = allValues[j]
-                    allValues[j] = val1
-                    allValues[i] = val2
-                    break
+        def findNums(allVal):
+            v1 = None
+            v2 = None
+            for i in range(len(allVal) - 1):
+                j = i + 1
+                if debug: print('allVal[%d] = %d, allVal[%d] = %d' % (i, allVal[i], j, allVal[j]))
+                if allVal[j] < allVal[i]:
+                    v2 = allVal[j]
+                    if v1 == None:
+                        v1 = allVal[i]
+            return v1,v2
+        val1, val2 = findNums(allValues)
+
         if debug: print(val1, val2)
 
         def swapNodes(n):
+            if n.left != None:
+                swapNodes(n.left)
             if n.val == val1:
                 n.val = val2
             elif n.val == val2:
                 n.val = val1
-            if n.left:
-                swapNodes(n.left)
-            if n.right:
+            if n.right != None:
                 swapNodes(n.right)
         swapNodes(root)
 
@@ -87,14 +91,23 @@ class Solution:
         
 
 s = Solution()
-# root = [1,3,null,null,2]
-root = TreeNode(3)
-root.left = TreeNode(1)
-root.right = TreeNode(2)
-s.printTree(root)
-s.recoverTree(root)
-# inputPosition = 1
-# solution = 1
-# output = s.detectCycle(inputHead)
-# print("%s | %s" % ('PASS' if (output == solution) else 'FAIL', output))
+print('root1')
+root1 = TreeNode(1)
+root1.left = TreeNode(3)
+root1.left.right = TreeNode(2)
+s.printTree(root1)
+s.recoverTree(root1)
 
+print('root2')
+root2 = TreeNode(3)
+root2.left = TreeNode(1)
+root2.right = TreeNode(4)
+root2.right.left = TreeNode(2)
+s.printTree(root2)
+s.recoverTree(root2)
+
+print('root3')
+root3 = TreeNode(0)
+root3.left = TreeNode(1)
+s.printTree(root3)
+s.recoverTree(root3)
