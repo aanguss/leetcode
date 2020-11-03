@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "string.h": "c"
-    }
+    },
+    "python.pythonPath": "/usr/local/bin/python3.8"
 }
