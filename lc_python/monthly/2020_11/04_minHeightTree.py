@@ -44,7 +44,7 @@ class Solution:
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
         if n == None or edges == None or len(edges) == 0:
             return [0]
-        debug = True
+        debug = False
         nDict = {}
         rootList = []
 
@@ -76,114 +76,61 @@ class Solution:
                     rootList.append(rootVal)
         rootList.sort()
 
-        rList = []
-        # def isRoot():
-            
-        # for i in range(n):
-        #     for n in nDict[i]:
-        #         if
-        queue = []
-        # while True:
-
-        for n in nDict:
-            # print("testing n =", n)
-            # queue.append(nDict[n][0])
-            visited = []
-            # queue:
-            # while True:
-            #     for i in n:
-            #         if 
-                    # queue.append(i)
-                    # while queue:
-                    #     current = queue.pop()
-                    #     if nDict[current]
-                        # if current not in visited:
-                        #     rList.append(current)
-                        
-
-
-
-
-            # for i in nDict[n]:
-                # current = queue.pop(0)
-
-                # if current not in visited:
-                #     visited.append(current)
-                #     print("--- n =", n)
-                #     print("---- nDict[current] =", nDict[current])
-                #     if nDict[current] != n:
-                #         print('----- adding')
-                #         rList.append(current)
-                
-                #     for i in nDict[current]:
-                #         if i not in visited:
-                #             queue.append(i)
-                            
-        # def isRoot(p):
-        #     if p is None or len(p) == 0:
-        #         return False
-
-        #     allNone = True
-        #     for i in p:
-        #         if nDict[i] != None or len(nDict[i]) != 0:
-        #             allNone = False
-        #         else:
-        #             while True:
-        rootDict = {}
-        nDict2 = {}     
+        queueList = []
         for k in nDict:
-            for i in nDict[k]:
-                # if nDict[i] == []:
-                rootDict[i] = k
-                # else:
-                #     rootDict[k] = i
+            if debug: print(nDict[k])
+            if len(nDict[k]) == 1:
+                queueList.append(k)
+
+        # couldnt figure this part out until looked at solution
+        remaining_nodes = n
+        while remaining_nodes > 2:
+            remaining_nodes -= len(queueList)
+            tempQueue = []
             
-        if debug: 
-            for i in rootDict: print(i, rootDict[i])
+            while queueList:
+                current = queueList.pop()
+                if debug: print("current=",current)
+                for i in nDict[current]:
+                    if debug: print("i=", i)
+                    if debug: print("nDict[i]=", nDict[i])
+                    nDict[i].remove(current)
+                    if debug: print("nDict[i]=", nDict[i])
+                    if len(nDict[i]) == 1:
+                        tempQueue.append(i)
+            queueList = tempQueue
         
-        newRootList = {}
-        for i in range(n):
-            newRootList[i] = []
-        adjCount = 0
-        criticalList = []
-        # for i in range(n):
-        currentN = 0
-        for e in edges:
-            if e[0] == 0:
-                newRootList[0]
-            elif e[1] == 0:
-                newRootList[1]
-            currentN +=1
-        print(newRootList)
-            # for i in range(n):
-            
-        return rootList
+        if debug: 
+            for i in nDict: print(i, nDict[i])
+
+        queueList.sort()
+        return queueList
 
 
 s = Solution()
-# n = 4
-# edges = [[1,0],[1,2],[1,3]]
-# solution = [1]
-# output = s.findMinHeightTrees(n, edges)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+n = 4
+edges = [[1,0],[1,2],[1,3]]
+solution = [1]
+output = s.findMinHeightTrees(n, edges)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# n = 6
-# edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
-# solution = [3,4]
-# output = s.findMinHeightTrees(n, edges)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+n = 6
+edges = [[3,0],[3,1],[3,2],[3,4],[5,4]]
+solution = [3,4]
+output = s.findMinHeightTrees(n, edges)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# n = 1
-# edges = []
-# solution = [0]
-# output = s.findMinHeightTrees(n, edges)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+n = 1
+edges = []
+solution = [0]
+output = s.findMinHeightTrees(n, edges)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# n = 2
-# edges = [[0,1]]
-# solution = [0,1]
-# output = s.findMinHeightTrees(n, edges)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+n = 2
+edges = [[0,1]]
+solution = [0,1]
+output = s.findMinHeightTrees(n, edges)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
 n = 6
 edges = [[0,1],[0,2],[0,3],[3,4],[4,5]]
