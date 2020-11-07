@@ -40,6 +40,7 @@ class Solution:
             sum += i
 
         ##### BINARY LOW TO HIGH #####
+        
 
         ##### LOW TO HIGH #####
         # priorSum = threshold
