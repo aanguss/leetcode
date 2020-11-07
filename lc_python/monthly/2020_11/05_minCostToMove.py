@@ -30,8 +30,17 @@
 from typing import List
 class Solution:
     def minCostToMoveChips(self, position: List[int]) -> int:
-        return 0
+        debug = False
+        minOdd = 0
+        minEven = 0
 
+        for i in range(len(position)):
+            if position[i] % 2 == 0:
+                minEven += 1
+            if position[i] % 2 != 0:
+                minOdd += 1
+        if debug: print(minOdd,minEven)
+        return min(minOdd, minEven)
 
 s = Solution()
 position = [1,2,3]
@@ -39,12 +48,12 @@ solution = 1
 output = s.minCostToMoveChips(position)
 print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# position = [2,2,2,3,3]
-# solution = 2
-# output = s.minCostToMoveChips(position)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+position = [2,2,2,3,3]
+solution = 2
+output = s.minCostToMoveChips(position)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# position = [1,1000000000]
-# solution = 1
-# output = s.minCostToMoveChips(position)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+position = [1,1000000000]
+solution = 1
+output = s.minCostToMoveChips(position)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
