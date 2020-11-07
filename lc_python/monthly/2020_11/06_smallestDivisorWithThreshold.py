@@ -31,14 +31,66 @@
 from typing import List
 class Solution:
     def smallestDivisor(self, nums: List[int], threshold: int) -> int:
-        return 0
+        if nums == None or len(nums) == 0 or threshold == None or threshold == 0:
+            return 0
+        debug = True
+        sum = 0
+        divisor = 1
+        for i in nums:
+            sum += i
+
+        ##### BINARY LOW TO HIGH #####
+
+        ##### LOW TO HIGH #####
+        # priorSum = threshold
+        # for i in range(1, sum-1):
+        #     sum = 0
+        #     for j in nums:
+        #         val = ( int(j / i) + (j % i > 0) )
+        #         sum += val
+        #         if debug: print(i,j,val,sum)
+        #     if debug: print(sum)
+        #     if sum == threshold:
+        #         if debug: print('matches threshold')
+        #         divisor = i
+        #         break
+        #     elif sum < threshold and priorSum > threshold:
+        #         if debug: print('using previous')
+        #         divisor = i
+        #         break
+        #     priorSum = sum
+        
+        ##### HIGH TO LOW #####
+        # startRange = 0
+        # if threshold > sum:
+        #     startRange = sum
+        # else:
+        #     startRange = threshold
+        # for i in range(startRange - 1, 0, -1):
+        #     sum = 0
+        #     for j in nums:
+        #         val = ( int(j / i) + (j % i > 0) )
+        #         sum += val
+        #         if debug: print(i,j,val,sum)
+        #     if debug: print(sum)
+        #     if sum <= threshold:
+        #         if debug: print('matches threshold')
+        #         divisor = i
+        #         break
+        #     # elif sum > threshold and priorSum < threshold:
+        #     #     if debug: print('using previous')
+        #     #     divisor = priorSum
+        #     #     break
+        #     priorSum = sum
+        
+        return divisor
 
 s = Solution()
-nums = [1,2,5,9]
-threshold = 6
-solution = 5
-output = s.smallestDivisor(nums, threshold)
-print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+# nums = [1,2,5,9]
+# threshold = 6
+# solution = 5
+# output = s.smallestDivisor(nums, threshold)
+# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
 # nums = [2,3,5,7,11]
 # threshold = 11
@@ -51,3 +103,17 @@ print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 # solution = 4
 # output = s.smallestDivisor(nums, threshold)
 # print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+# nums = [1,2,3]
+# threshold = 1000000
+# solution = 1
+# output = s.smallestDivisor(nums, threshold)
+# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+
+
+nums = [91,41,78,86,8]
+threshold = 114
+solution = 3
+output = s.smallestDivisor(nums, threshold)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
