@@ -53,7 +53,7 @@ class Solution:
         if root.left == None and root.right == None:
             return 0
 
-        # go through all nodes
+        # go through all nodes DFS stack
         binaryStack = []
         binaryDict = {}
         maxDifference = 0
