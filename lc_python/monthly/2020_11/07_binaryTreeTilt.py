@@ -64,7 +64,48 @@ class TreeNode:
         self.right = right
 class Solution:
     def findTilt(self, root: TreeNode) -> int:
-        return 0
+        # recursive binary tree search summation 
+        # binarySum = 0
+        tiltSum = 0
+        
+        def findSum(r: TreeNode):
+            nonlocal tiltSum
+            if r == None:
+                return 0
+            
+            left = findSum(r.left)
+            right = findSum(r.right)
+            tilt = abs(left - right)
+            tiltSum += tilt
+
+            return left + right + r.val
+
+        # binarySum = findSum(root)
+        findSum(root)
+        return tiltSum
+
+        # def findSum(r: TreeNode):
+        #     binaryStack = []
+        #     binarySum = 0
+        #     binaryStack.append(r)
+
+        #     while len(binaryStack) != 0:
+        #         node = binaryStack.pop()
+        #         left = 0
+        #         right = 0
+        #         if node.left:
+        #             binaryStack.append(node.left)
+        #             left = node.left.val
+        #         if node.right:
+        #             binaryStack.append(node.right)
+        #             right = node.right.val
+        #         print(node.val, left, right)
+        #         binarySum += abs(left - right)
+        #         print('binarySum=',binarySum)
+
+        #     print(binarySum)
+        #     return binarySum
+        # return findSum(root)
 
 s = Solution()
 #                 1                1
@@ -82,15 +123,15 @@ print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 # #               2   9     --->      2   7
 # #              / \   \             / \   \
 # #             3   5   7           0   0   0
-# t2 = TreeNode(1)
-# t2.left = TreeNode(2)
-# t2.left.left = TreeNode(3)
-# t2.left.right = TreeNode(5)
-# t2.right = TreeNode(9)
-# t2.right.right = TreeNode(7)
-# solution = 15
-# output = s.findTilt(t2)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+t2 = TreeNode(4)
+t2.left = TreeNode(2)
+t2.left.left = TreeNode(3)
+t2.left.right = TreeNode(5)
+t2.right = TreeNode(9)
+t2.right.right = TreeNode(7)
+solution = 15
+output = s.findTilt(t2)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
 # #                 21                      3
 # #                /  \                   /   \
