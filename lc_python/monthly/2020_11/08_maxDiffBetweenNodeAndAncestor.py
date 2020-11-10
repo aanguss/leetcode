@@ -47,7 +47,41 @@ class TreeNode:
         self.right = right
 class Solution:
     def maxAncestorDiff(self, root: TreeNode) -> int:
-        return 0
+        # https://www.geeksforgeeks.org/iterative-depth-first-traversal/
+        if root == None:
+            return 0
+        if root.left == None and root.right == None:
+            return 0
+
+        # go through all nodes
+        binaryStack = []
+        binaryDict = {}
+        maxDifference = 0
+
+        binaryStack.append(root)
+        while len(binaryStack) != 0:
+            decendStack = []
+            currentNode = binaryStack.pop()
+            binaryDict[currentNode.val] = []
+            decendStack.append(currentNode)
+            while len(decendStack) != 0:
+                node = decendStack.pop()
+                # print(currentNode.val, node.val)
+                # binaryDict[currentNode.val].append(node.val)
+                binaryDict[currentNode.val].append(abs(currentNode.val-node.val))
+                if abs(currentNode.val - node.val) > maxDifference:
+                    maxDifference = abs(currentNode.val - node.val)
+                if node.left != None:
+                    decendStack.append(node.left)
+                if node.right != None:
+                    decendStack.append(node.right)
+            if currentNode.left != None:
+                binaryStack.append(currentNode.left)
+            if currentNode.right != None:
+                binaryStack.append(currentNode.right)
+                
+        # print(binaryDict)
+        return maxDifference
 
 s = Solution()
 #                       8
@@ -77,10 +111,17 @@ print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 #                         0
 #                        /
 #                       3
-# t2 = TreeNode(1)
-# t2.right = TreeNode(2)
-# t2.right.right = TreeNode(0)
-# t2.right.right.left = TreeNode(3)
-# solution = 3
-# output = s.maxAncestorDiff(t2)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+t2 = TreeNode(1)
+t2.right = TreeNode(2)
+t2.right.right = TreeNode(0)
+t2.right.right.left = TreeNode(3)
+solution = 3
+output = s.maxAncestorDiff(t2)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+#                     1
+
+t3 = TreeNode(1)
+solution = 0
+output = s.maxAncestorDiff(t3)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
