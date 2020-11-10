@@ -52,6 +52,8 @@
 from typing import List
 class Solution:
     def myAtoi(self, s: str) -> int:
+        if s == None or len(s) == 0:
+            return 0
         debug = False
         INT_MIN = -2**31
         INT_MAX = 2**31 - 1
@@ -61,28 +63,37 @@ class Solution:
         num = 0
         negNum = False
         digits = ['0','1','2','3','4','5','6','7','8','9']
-        
-        words = s.replace(' ', ',').split(',')
-        if debug: print('words =',words)
-        for w in words:
-            if debug: print(w)
-            if debug: print(w[0])
-            if w == '':
+
+        startNumIndex = -1
+        endNumIndex = -1
+
+        for i in range(len(s)):
+            if s[i] == ' ':
                 continue
-            elif len(w) >=1 and w[0] in digits:
-                if debug: print(w)
-                sNum = w
-                break
-            elif len(w) >= 2 and w[0] == '-' and w[1] in digits:
-                negNum = True
-                sNum = w[1:]
-                break
-            elif len(w) >= 2 and w[0] == '+' and w[1] in digits:
-                sNum = w[1:]
+            elif s[i] == '+' or s[i] == '-':
+                if i + 1 < len(s) and s[i + 1] not in digits:
+                    return 0
+                else:
+                    continue
+            elif s[i] in digits:
+                startNumIndex = i
+                if i-1>=0 and s[i-1] == '-':
+                    negNum = True
                 break
             else:
                 break
-        if debug: print(sNum)
+                
+        for i in range(startNumIndex, len(s)):
+            if s[i] not in digits:
+                endNumIndex = i
+                break
+            elif i == len(s) - 1:
+                endNumIndex = i + 1
+        
+        if debug: print('start = %s and end = %s' % (startNumIndex, endNumIndex))
+        sNum = s[startNumIndex:endNumIndex]
+        
+        if debug: print('sNum =',sNum)
         if sNum != '':
             if debug: print('no blank value')
             decIndex = sNum.find(".")
@@ -113,26 +124,88 @@ class Solution:
         
         return num
 
+        #### LOTS OF CHECKING - BETTER TO JUST FOR LOOP TILL NONCHAR ####
+        # debug = False
+        # INT_MIN = -2**31
+        # INT_MAX = 2**31 - 1
+        # if debug: print(INT_MIN)
+        # if debug: print(INT_MAX)
+        # sNum = ''
+        # num = 0
+        # negNum = False
+        # digits = ['0','1','2','3','4','5','6','7','8','9']
+        
+        # words = s.replace(' ', ',').split(',')
+        # if debug: print('words =',words)
+        # for w in words:
+        #     if debug: print(w)
+        #     if debug: print(w[0])
+        #     if w == '':
+        #         continue
+        #     elif len(w) >=1 and w[0] in digits:
+        #         if debug: print(w)
+        #         sNum = w
+        #         break
+        #     elif len(w) >= 2 and w[0] == '-' and w[1] in digits:
+        #         negNum = True
+        #         sNum = w[1:]
+        #         break
+        #     elif len(w) >= 2 and w[0] == '+' and w[1] in digits:
+        #         sNum = w[1:]
+        #         break
+        #     else:
+        #         break
+        # if debug: print(sNum)
+        # if sNum != '':
+        #     if debug: print('no blank value')
+        #     decIndex = sNum.find(".")
+        #     if decIndex != -1:
+        #         sNum = sNum[:decIndex]
+                
+        #     pos = 0
+        #     if debug: print(sNum)
+        #     for i in range(len(sNum)-1,-1,-1):
+        #         if debug: print('sNum[i]=',sNum[i])
+        #         if debug: print('index=',digits.index(sNum[i]))
+        #         if debug: print (10**pos)
+        #         val = ((10**pos) * digits.index(sNum[i]))
+        #         num += val
+        #         if debug: print('pos*10=',(10**pos))
+        #         if debug: print('val=',val)
+        #         if debug: print('num=',num)
+        #         pos += 1
+        #     if negNum:
+        #         num *= -1
+        #     if debug: print(num)
+        #     if num < INT_MIN:
+        #         num = INT_MIN
+        #     elif num > INT_MAX:
+        #         num = INT_MAX
+        # else:
+        #     num = 0
+        
+        # return num
+
 s = Solution()
-# string = "42"
-# solution = 42
-# output = s.myAtoi(string)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+string = "42"
+solution = 42
+output = s.myAtoi(string)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# string = "   -42"
-# solution = -42
-# output = s.myAtoi(string)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+string = "   -42"
+solution = -42
+output = s.myAtoi(string)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# string = "4193 with words"
-# solution = 4193
-# output = s.myAtoi(string)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+string = "4193 with words"
+solution = 4193
+output = s.myAtoi(string)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-# string = "words and 987"
-# solution = 0
-# output = s.myAtoi(string)
-# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+string = "words and 987"
+solution = 0
+output = s.myAtoi(string)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
 # string = "-91283472332"
 # solution = (-2**31)
@@ -144,12 +217,27 @@ s = Solution()
 # output = s.myAtoi(string)
 # print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-string = "1"
-solution = 1
+# string = "1"
+# solution = 1
+# output = s.myAtoi(string)
+# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+# string = "+1"
+# solution = 1
+# output = s.myAtoi(string)
+# print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+string = "+-12"
+solution = 0
 output = s.myAtoi(string)
 print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
 
-string = "+1"
-solution = 1
+string = "-+12"
+solution = 0
+output = s.myAtoi(string)
+print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
+
+string = "-   234"
+solution = 0
 output = s.myAtoi(string)
 print("%s | %s" % ("PASS" if output == solution else "FAIL", output))
